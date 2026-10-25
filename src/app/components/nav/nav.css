@@ -11,9 +11,8 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.5rem 1rem;
-  background: var(--color-bg, #f5efe6);
+  background: transparent;
   color: var(--color-text, #2b1f16);
-  border-bottom: 1px solid var(--color-border, rgba(43, 31, 22, 0.15));
 }
 
 .nav__logo {
@@ -252,6 +251,7 @@ input:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .logo__text,
   .logo__text span,
   .search {
