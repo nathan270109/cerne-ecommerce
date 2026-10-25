@@ -1,5 +1,83 @@
 <div class="nav">
 
+  <div class="nav__logo">
+    <a routerLink="/" class="logo" aria-label="Cerne, página inicial" (click)="closeAll()">
+      <img class="logo__mark" src="/assets/logo-cerne-escuro.png" alt="" width="42" height="42" />
+      <span class="logo__text" aria-hidden="true">
+        @for (letter of brandLetters; track $index) {
+          <span [style.--i]="$index">{{ letter }}</span>
+        }
+      </span>
+    </a>
+  </div>
 
-    
+  <div class="nav__links">
+    <button
+      class="icon-btn menu-btn"
+      type="button"
+      aria-controls="menu-categorias"
+      [attr.aria-label]="menuOpen() ? 'Fechar menu' : 'Abrir menu'"
+      [attr.aria-expanded]="menuOpen()"
+      (click)="toggleMenu()">
+      @if (menuOpen()) {
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      } @else {
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+      }
+    </button>
+
+    <nav id="menu-categorias" aria-label="Categorias" [class.open]="menuOpen()">
+      @for (cat of categories; track cat.slug) {
+        <a routerLink="/produtos" [queryParams]="{ categoria: cat.slug }" (click)="closeAll()">{{ cat.label }}</a>
+      }
+    </nav>
+  </div>
+
+  <div class="nav__search">
+    <button
+      class="icon-btn"
+      type="button"
+      aria-controls="form-pesquisa"
+      [attr.aria-label]="searchOpen() ? 'Fechar pesquisa' : 'Abrir pesquisa'"
+      [attr.aria-expanded]="searchOpen()"
+      (click)="toggleSearch()">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-3.5-3.5" />
+      </svg>
+    </button>
+
+    <form id="form-pesquisa" class="search" role="search" [class.open]="searchOpen()" (submit)="onSearch($event, searchInput.value)">
+      <input
+        #searchInput
+        type="search"
+        name="busca"
+        placeholder="Buscar sofá, mesa, estante"
+        aria-label="Pesquisar produtos"
+        autocomplete="off" />
+    </form>
+  </div>
+
+  <div class="nav__login">
+    <a routerLink="/login" class="icon-btn" aria-label="Entrar na conta" (click)="closeAll()">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="nav__cart">
+    <a routerLink="/carrinho" class="icon-btn" [attr.aria-label]="'Carrinho, ' + cartCount() + ' itens'" (click)="closeAll()">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="9" cy="20" r="1.5" />
+        <circle cx="18" cy="20" r="1.5" />
+        <path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.3a1 1 0 0 0 1-.8L21 7H6" />
+      </svg>
+      @if (cartCount() > 0) {
+        <span class="badge" aria-hidden="true">{{ cartCount() }}</span>
+      }
+    </a>
+  </div>
+
 </div>
